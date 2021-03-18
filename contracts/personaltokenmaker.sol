@@ -712,12 +712,15 @@ contract PersonalTokenFactory {
     mapping (address => address) public ownerToTokens;
     
     function createToken(string memory _name, string memory _symbol , address _person) public returns(address){
+        require( ownerToTokens[_person] == 0x0000000000000000000000000000000000000000 );
+        
         address _tokenAddress;
         IERC20 token;
         token = new PersonalToken( _name,  _symbol , _person);
         _tokenAddress = address(token);
+
         ownerToTokens[_person] = _tokenAddress;
-        
+
         return _tokenAddress;
     }
 }
